@@ -1,11 +1,28 @@
+using Track.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Data.SqlClient;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Track API", Version = "v1" });
+});
+
+// Configure DbContext with Secure Connection String
+var connectionString = builder.Configuration.GetConnectionString("trackAppDBCon");
+var dbPassword = builder.Configuration["DbPw"];
+var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString)
+{
+    Password = dbPassword
+};
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(connectionStringBuilder.ConnectionString));
+
 
 var app = builder.Build();
 
