@@ -23,6 +23,8 @@ var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionStringBuilder.ConnectionString));
 
+builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
+
 
 var app = builder.Build();
 
