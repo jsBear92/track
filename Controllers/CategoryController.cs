@@ -21,14 +21,14 @@ namespace Track.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetAllCategories()
         {
-            return await _db.Categories.ToListAsync();
+            return await _db.categories.ToListAsync();
         }
 
         // GET: api/Category/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<Category>> GetCategoryById(int id)
         {
-            var category = await _db.Categories.FindAsync(id);
+            var category = await _db.categories.FindAsync(id);
 
             if (category == null)
             {
@@ -43,7 +43,7 @@ namespace Track.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> CreateCategory(Category category)
         {
-            _db.Categories.Add(category);
+            _db.categories.Add(category);
             await _db.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, category);

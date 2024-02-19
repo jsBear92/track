@@ -9,7 +9,7 @@ namespace Track.Data
         {
         }
 
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Category> categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

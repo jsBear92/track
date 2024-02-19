@@ -1,7 +1,7 @@
 using Track.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,12 +16,12 @@ builder.Services.AddSwaggerGen(c =>
 // Configure DbContext with Secure Connection String
 var connectionString = builder.Configuration.GetConnectionString("trackAppDBCon");
 var dbPassword = builder.Configuration["DbPw"];
-var connectionStringBuilder = new SqlConnectionStringBuilder(connectionString)
+var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString)
 {
     Password = dbPassword
 };
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionStringBuilder.ConnectionString));
+    options.UseNpgsql(connectionStringBuilder.ConnectionString));
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
