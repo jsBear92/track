@@ -43,10 +43,16 @@ namespace Track.Controllers
         [HttpPost]
         public async Task<ActionResult<Category>> CreateCategory(Category category)
         {
-            _db.categories.Add(category);
-            await _db.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, category);
+            if (ModelState.IsValid)
+            {
+                _db.categories.Add(category);
+                await _db.SaveChangesAsync();
+                return CreatedAtAction(nameof(GetCategoryById), new { id = category.Id }, category);
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
 
     }

@@ -58,8 +58,10 @@ function Category() {
       })
       .catch((error) => {
         console.error("Error:", error);
+        setCategoryName("");
+        setDisplayOrder("");
       });
-  };
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +109,12 @@ function Category() {
                       name="Category Name"
                       variant="bordered"
                       value={categoryName}
+                      isRequired
+                      errorMessage={
+                        !categoryName
+                          ? "Category Name is required"
+                          : ""
+                      }
                       onValueChange={setCategoryName}
                     />
                     <Input
@@ -115,6 +123,14 @@ function Category() {
                       variant="bordered"
                       value={displayOrder}
                       onValueChange={setDisplayOrder}
+                      isInvalid={
+                        displayOrder > 0 && displayOrder <= 100 ? false : true
+                      }
+                      errorMessage={
+                        displayOrder > 0 && displayOrder <= 100
+                          ? ""
+                          : "Display Order should be between 1 and 100"
+                      }
                     />
                   </ModalBody>
                   <ModalFooter>
