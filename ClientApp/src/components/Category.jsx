@@ -80,6 +80,66 @@ function Category() {
     });
   }, []);
 
+  async function updateCategory(row) {
+    let category = {
+      name: row.name,
+      displayOrder: parseInt(row.displayOrder),
+    };
+    console.log(row.id, row.name, row.displayOrder);
+    await fetch(`http://localhost:5241/api/Category/${row.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(category),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        if (response.status === 200) {
+          console.log("Success: Category updated");
+          navigate("/category", { replace: true });
+          return null;
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
+  async function deleteCategory(id) {
+    await fetch(`http://localhost:5241/api/Category/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        // Check if the response is empty (204 No Content)
+        if (response.status === 204) {
+          console.log("Success: Category deleted");
+
+          navigate("/category", { replace: true });
+          return null;  // Return early as there's no content to parse
+        }
+        return response.json();
+      })
+      .then((data) => {
+        // If there was data to parse, process it here
+        if (data) {
+          console.log("Success:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+
   return (
     <div className="px-8 py-4 w-full">
       <div className="mb-8 flex justify-between items-center">
@@ -111,9 +171,7 @@ function Category() {
                       value={categoryName}
                       isRequired
                       errorMessage={
-                        !categoryName
-                          ? "Category Name is required"
-                          : ""
+                        !categoryName ? "Category Name is required" : ""
                       }
                       onValueChange={setCategoryName}
                     />
@@ -157,6 +215,8 @@ function Category() {
               <th className="px-8 py-4 text-left text-lg font-medium text-gray-500 uppercase tracking-wider">
                 Display Order
               </th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-300">
@@ -167,6 +227,26 @@ function Category() {
                 </td>
                 <td className="px-8 py-4 whitespace-nowrap text-lg text-gray-900">
                   {track.displayOrder}
+                </td>
+                <td>
+                  <Button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded"
+                    onPress={() => {
+                      updateCategory(track);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </td>
+                <td>
+                  <Button
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded"
+                    onPress={() => {
+                      deleteCategory(track.id);
+                    }}
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}
