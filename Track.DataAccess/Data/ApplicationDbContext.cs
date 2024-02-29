@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Track.Models;
+using Track.Models.Models;
 
-namespace Track.Data
+namespace Track.DataAccess.Data
 {
     public class ApplicationDbContext : DbContext
     {

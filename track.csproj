@@ -5,7 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <InvariantGlobalization>false</InvariantGlobalization>
-    <UserSecretsId>e90c5125-8f75-4365-894a-53b6f48473a0</UserSecretsId>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>   
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <ItemGroup>

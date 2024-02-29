@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Track.Data;
-using Track.Models;
+using Track.DataAccess.Data;
+using Track.Models.Models;
 
 namespace Track.Controllers
 {
@@ -10,7 +10,7 @@ namespace Track.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly ApplicationDbContext _db;
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         public CategoryController(IConfiguration configuration, ApplicationDbContext db)
         {
             _configuration = configuration;

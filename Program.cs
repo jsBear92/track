@@ -1,4 +1,4 @@
-using Track.Data;
+using Track.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Npgsql;

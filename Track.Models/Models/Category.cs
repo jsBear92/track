@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace Track.Models
+namespace Track.Models.Models
 {
     public class Category
     {
